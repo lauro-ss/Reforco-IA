@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 
 public class Q2_Learning {
@@ -87,12 +91,12 @@ public class Q2_Learning {
         A[3] = 3; //ir pra direita
     }
 
-    public void start(){
+    public void start() throws IOException{
         int movimentos = 0;
         int acao;
         int v_aux[] = new int[2];
-        while(movimentos < 10000){
-            if(movimentos < 5000)
+        while(movimentos < 100000){
+            if(movimentos < 90000)
                 acao = random.nextInt(4);
             else
                 acao = move(estado_atual);
@@ -101,7 +105,7 @@ public class Q2_Learning {
                 //subida
                 if(A[acao] == 0){
                     v_aux[0] += -1;
-                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " subindo");
+                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " subindo");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 47; i++){
@@ -119,7 +123,7 @@ public class Q2_Learning {
                 //descida
                 else if(A[acao] == 1){
                     v_aux[0] += 1;
-                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " descendo");
+                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " descendo");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 47; i++){
@@ -136,7 +140,7 @@ public class Q2_Learning {
                 //para a esquerda
                 else if(A[acao] == 2){
                     v_aux[1] += -1;
-                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela esquerda");
+                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela esquerda");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 47; i++){
@@ -153,7 +157,7 @@ public class Q2_Learning {
                 //para a direita
                 else if(A[acao] == 3){
                     v_aux[1] += 1;
-                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela direita");
+                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela direita");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 47; i++){
@@ -170,15 +174,22 @@ public class Q2_Learning {
                 movimentos++;
             }
         }
-        System.out.println("Matriz Q");
+        FileWriter c_arquivo = new FileWriter(System.getProperty("user.dir") + "\\q2_tabelaQ.txt", false);
+        BufferedWriter buffer = new BufferedWriter(c_arquivo);
+        PrintWriter escritor = new PrintWriter(buffer);
+
+        //System.out.println("Matriz Q");
         for(int i = 0; i < Q.length; i++){
             for(int c = 0; c < 4; c++){
-                System.out.print(Q[i][c] + " ");
+                //System.out.print(Q[i][c] + " ");
+                escritor.append(Q[i][c] + " ");
             }
-            System.out.println();
+            //System.out.println();
+            escritor.append("\n");
         }
-        System.out.println("Estado inicial "+ start);
-        System.out.println("Estado final "+ goal);
+        escritor.close();
+        buffer.close();
+        c_arquivo.close();
     }
     private int[] verificaMove(int move, int estado){
         int aux = 0;
@@ -188,7 +199,6 @@ public class Q2_Learning {
                 if(aux == estado){
                     //subida
                     if(move == 0){
-                        System.out.println(i);
                         if(i != 0 && campo[i-1][c] != 1){
                             v_aux[0] = i;
                             v_aux[1] = c;
@@ -205,7 +215,6 @@ public class Q2_Learning {
                     }
                     //para a esquerda
                     if(move == 2){
-                        System.out.println(c);
                         if(c != 0 && campo[i][c-1] != 1){
                             v_aux[0] = i;
                             v_aux[1] = c;
@@ -220,6 +229,7 @@ public class Q2_Learning {
                             return v_aux;
                         }
                     }
+                    return null;
                 }
                 aux++;
             }

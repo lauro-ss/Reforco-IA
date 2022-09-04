@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 
 public class Q1_Learning {
@@ -46,7 +50,7 @@ public class Q1_Learning {
         A[3] = 3; //ir pra direita
     }
 
-    public void start(){
+    public void start() throws IOException{
         int movimentos = 0;
         int acao;
         int v_aux[] = new int[2];
@@ -129,15 +133,22 @@ public class Q1_Learning {
                 movimentos++;
             }
         }
+        FileWriter c_arquivo = new FileWriter(System.getProperty("user.dir") + "\\q1_tabelaQ.txt", false);
+        BufferedWriter buffer = new BufferedWriter(c_arquivo);
+        PrintWriter escritor = new PrintWriter(buffer);
+        
         System.out.println("Matriz Q");
         for(int i = 0; i < 36; i++){
             for(int c = 0; c < 4; c++){
                 System.out.print(Q[i][c] + " ");
+                escritor.append(Q[i][c] + " ");
             }
             System.out.println();
+            escritor.append("\n");
         }
-        System.out.println("Estado inicial "+ start);
-        System.out.println("Estado final "+ goal);
+        escritor.close();
+        buffer.close();
+        c_arquivo.close();
     }
 
     private int[] verificaMove(int move, int estado){
@@ -178,6 +189,7 @@ public class Q1_Learning {
                             return v_aux;
                         }
                     }
+                    return null;
                 }
                 aux++;
             }
