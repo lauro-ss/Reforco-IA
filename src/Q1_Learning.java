@@ -3,12 +3,12 @@ import java.util.Random;
 public class Q1_Learning {
 
     private int campo[][] = {
-        {0, 0, 0, 0, 0, 0,
-         0, 0, 0, 0, 0, 0,
-         0, 0, 0, 0, 0, 0,
-         0, 0, 0, 0, 0, 0,
-         0, 0, 0, 0, 0, 0,
-         0, 0, 0, 0, 0, 0}
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0}
     };
     private int S[] = new int[36];
 
@@ -130,7 +130,7 @@ public class Q1_Learning {
             }
         }
         System.out.println("Matriz Q");
-        for(int i = 0; i < Q.length; i++){
+        for(int i = 0; i < 36; i++){
             for(int c = 0; c < 4; c++){
                 System.out.print(Q[i][c] + " ");
             }
