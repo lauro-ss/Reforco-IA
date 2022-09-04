@@ -20,7 +20,7 @@ public class Q1_Learning {
     private int start;
     private int estado_atual;
     private int estado_anterior;
-
+    private Random random = new Random();
     private double fator_apd = 0.9;
     // q = r + (0.9 * max{q[i]q[c],q[i]q[c],q[i]q[c],q[i]q[c]})
 
@@ -47,19 +47,20 @@ public class Q1_Learning {
     }
 
     public void start(){
-        Random random = new Random();
         int movimentos = 0;
         int acao;
         int v_aux[] = new int[2];
-        while(movimentos < 100){
-            acao = random.nextInt(4);
+        while(movimentos < 10000){
+            if(movimentos < 5000)
+                acao = random.nextInt(4);
+            else
+                acao = move(estado_atual);
             v_aux = verificaMove(A[acao], estado_atual);
             if(v_aux != null){
                 //subida
                 if(A[acao] == 0){
                     v_aux[0] += -1;
-                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " subindo");
-                    System.out.println("Entrando " + estado_atual);
+                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " subindo");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 6; i++){
@@ -71,15 +72,13 @@ public class Q1_Learning {
                             estado_atual++;
                         }
                     }
-                    System.out.println("Saindo " + estado_atual);
                     Q[estado_anterior][A[acao]] = S[estado_atual] + (fator_apd * max(estado_atual));
 
                 }
                 //descida
                 else if(A[acao] == 1){
                     v_aux[0] += 1;
-                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " descendo");
-                    System.out.println("Entrando " + estado_atual);
+                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " descendo");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 6; i++){
@@ -91,14 +90,12 @@ public class Q1_Learning {
                             estado_atual++;
                         }
                     }
-                    System.out.println("Saindo " + estado_atual);
                     Q[estado_anterior][A[acao]] = S[estado_atual] + (fator_apd * max(estado_atual));
                 }
                 //para a esquerda
                 else if(A[acao] == 2){
                     v_aux[1] += -1;
-                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela esquerda");
-                    System.out.println("Entrando " + estado_atual);
+                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela esquerda");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 6; i++){
@@ -110,14 +107,12 @@ public class Q1_Learning {
                             estado_atual++;
                         }
                     }
-                    System.out.println("Saindo " + estado_atual);
                     Q[estado_anterior][A[acao]] = S[estado_atual] + (fator_apd * max(estado_atual));
                 }
                 //para a direita
                 else if(A[acao] == 3){
                     v_aux[1] += 1;
-                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela direita");
-                    System.out.println("Entrando " + estado_atual);
+                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela direita");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 6; i++){
@@ -129,20 +124,20 @@ public class Q1_Learning {
                             estado_atual++;
                         }
                     }
-                    System.out.println("Saindo " + estado_atual);
                     Q[estado_anterior][A[acao]] = S[estado_atual] + (fator_apd * max(estado_atual));
                 }
                 movimentos++;
-                //System.out.println(max(estado_atual));
             }
         }
+        System.out.println("Matriz Q");
         for(int i = 0; i < Q.length; i++){
             for(int c = 0; c < 4; c++){
                 System.out.print(Q[i][c] + " ");
             }
             System.out.println();
         }
-        System.out.println(goal);
+        System.out.println("Estado inicial "+ start);
+        System.out.println("Estado final "+ goal);
     }
 
     private int[] verificaMove(int move, int estado){
@@ -198,5 +193,16 @@ public class Q1_Learning {
             }
         }
         return maior;
+    }
+
+    private int move(int estado){
+        int acao = random.nextInt(4);
+        double maior = 0;
+        for(int i = 0; i < 4; i++){
+            if(Q[estado][i] > maior){
+                acao = i;
+            }
+        }
+        return acao;
     }
 }
