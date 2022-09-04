@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 
+/*
+ * autor: Lauro Santana Silva
+ */
+
 public class Q2_Learning {
         //o numero 1 representa as paredes 22 estado final subindo 37(colunas)*47(linhas)
     private int campo[][] = {

@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 
+/*
+ * autor: Lauro Santana Silva
+ */
+
 public class Q1_Learning {
 
     private int campo[][] = {
