@@ -7,7 +7,7 @@ import java.util.Random;
 public class Q2_Learning {
         //o numero 1 representa as paredes 22 estado final subindo 37(colunas)*47(linhas)
     private int campo[][] = {
-                                                                           //s
+                                                                          //s
         {0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1},
         {0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0},
@@ -105,7 +105,7 @@ public class Q2_Learning {
                 //subida
                 if(A[acao] == 0){
                     v_aux[0] += -1;
-                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " subindo");
+                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " subindo");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 47; i++){
@@ -123,7 +123,7 @@ public class Q2_Learning {
                 //descida
                 else if(A[acao] == 1){
                     v_aux[0] += 1;
-                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " descendo");
+                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " descendo");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 47; i++){
@@ -140,7 +140,7 @@ public class Q2_Learning {
                 //para a esquerda
                 else if(A[acao] == 2){
                     v_aux[1] += -1;
-                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela esquerda");
+                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela esquerda");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 47; i++){
@@ -157,7 +157,7 @@ public class Q2_Learning {
                 //para a direita
                 else if(A[acao] == 3){
                     v_aux[1] += 1;
-                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela direita");
+                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela direita");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 47; i++){

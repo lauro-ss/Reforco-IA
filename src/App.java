@@ -17,6 +17,9 @@ public class App {
             * obs: pela quantidade de estados, a matriz Q ficou muito grande,
             * além disso, também é gerado um arquivo txt ao final, para melhor visualização.
             * a questao 2 so e possivel verificar toda a tabela Q pelo arquivo txt.
+            *
+            * obs: pode acontecer da tabela vir toda zerada. pois ele nao encontrou dentro
+            * do numero de movimentos o estado de recompensa, entao recomendo rodar mais de uma vez
             */
             Q2_Learning Q2 = new Q2_Learning(random.nextInt(1739), 22);
             Q2.start();
