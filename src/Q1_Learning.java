@@ -51,80 +51,89 @@ public class Q1_Learning {
         int movimentos = 0;
         int acao;
         int v_aux[] = new int[2];
-        while(movimentos < 10000){
+        while(movimentos < 100){
             acao = random.nextInt(4);
             v_aux = verificaMove(A[acao], estado_atual);
             if(v_aux != null){
                 //subida
                 if(A[acao] == 0){
                     v_aux[0] += -1;
-                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1]);
+                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " subindo");
+                    System.out.println("Entrando " + estado_atual);
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 6; i++){
                         for(int c = 0; c < 6 ; c++){
                             if(c == v_aux[1] && i == v_aux[0]){
+                                i = 6;
                                 break;
                             }
                             estado_atual++;
                         }
                     }
-                    System.out.println(estado_atual);
+                    System.out.println("Saindo " + estado_atual);
                     Q[estado_anterior][A[acao]] = S[estado_atual] + (fator_apd * max(estado_atual));
 
                 }
                 //descida
                 else if(A[acao] == 1){
                     v_aux[0] += 1;
-                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1]);
+                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " descendo");
+                    System.out.println("Entrando " + estado_atual);
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 6; i++){
                         for(int c = 0; c < 6 ; c++){
                             if(c == v_aux[1] && i == v_aux[0]){
+                                i = 6;
                                 break;
                             }
                             estado_atual++;
                         }
                     }
-                    System.out.println(estado_atual);
+                    System.out.println("Saindo " + estado_atual);
                     Q[estado_anterior][A[acao]] = S[estado_atual] + (fator_apd * max(estado_atual));
                 }
                 //para a esquerda
                 else if(A[acao] == 2){
                     v_aux[1] += -1;
-                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1]);
+                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela esquerda");
+                    System.out.println("Entrando " + estado_atual);
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 6; i++){
                         for(int c = 0; c < 6 ; c++){
                             if(c == v_aux[1] && i == v_aux[0]){
+                                i = 6;
                                 break;
                             }
                             estado_atual++;
                         }
                     }
-                    System.out.println(estado_atual);
+                    System.out.println("Saindo " + estado_atual);
                     Q[estado_anterior][A[acao]] = S[estado_atual] + (fator_apd * max(estado_atual));
                 }
                 //para a direita
                 else if(A[acao] == 3){
                     v_aux[1] += 1;
-                    //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1]);
+                    System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela direita");
+                    System.out.println("Entrando " + estado_atual);
                     estado_anterior = estado_atual;
                     estado_atual = 0;
                     for(int i = 0; i < 6; i++){
                         for(int c = 0; c < 6 ; c++){
                             if(c == v_aux[1] && i == v_aux[0]){
+                                i = 6;
                                 break;
                             }
                             estado_atual++;
                         }
                     }
-                    System.out.println(estado_atual);
+                    System.out.println("Saindo " + estado_atual);
                     Q[estado_anterior][A[acao]] = S[estado_atual] + (fator_apd * max(estado_atual));
                 }
                 movimentos++;
+                //System.out.println(max(estado_atual));
             }
         }
         for(int i = 0; i < Q.length; i++){
