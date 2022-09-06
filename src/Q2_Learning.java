@@ -225,6 +225,7 @@ public class Q2_Learning {
                 movimentos++;
             }
         }
+        System.out.println("Fim dos movimentos");
         FileWriter c_arquivo = new FileWriter(System.getProperty("user.dir") + "\\q2_tabelaQ.txt", false);
         BufferedWriter buffer = new BufferedWriter(c_arquivo);
         PrintWriter escritor = new PrintWriter(buffer);
