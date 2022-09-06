@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 
 public class Q2_Learning {
-        //o numero 1 representa as paredes 29 estado final subindo
+        //o numero 1 representa as paredes, 29 o estado com recompensa
     private int campo[][] = {
                                                                   //s
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
