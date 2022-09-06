@@ -1,8 +1,11 @@
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
+import java.util.Scanner;
 
 /*
  * autor: Lauro Santana Silva
@@ -18,22 +21,30 @@ public class Q1_Learning {
         {0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0}
     };
-    private int S[] = new int[36];
+    private int S[] = new int[(campo.length*campo.length)];
 
     private int A[] = new int[4];
 
-    private double Q[][] = new double[36][4];
+    private double Q[][] = new double[(campo.length*campo.length)][4];
 
     private int goal;
     private int start;
+    private int num_movimento;
     private int estado_atual;
     private int estado_anterior;
+    private boolean aleatorio = true;
     private Random random = new Random();
     private double fator_apd = 0.9;
-    // q = r + (0.9 * max{q[i]q[c],q[i]q[c],q[i]q[c],q[i]q[c]})
-
-    public Q1_Learning(int start, int goal){
+    
+    /**
+     * 
+     * @param start estado de inicio
+     * @param goal estado do objetivo
+     * @param num_movimento estado do objetivo
+     */
+    public Q1_Learning(int start, int goal, int num_movimento){
         this.start = start;
+        this.num_movimento = num_movimento;
         this.estado_atual = start;
         this.goal = goal;
 
@@ -43,11 +54,32 @@ public class Q1_Learning {
             else
                 this.S[i] = 0;
         }
-        for(int i = 0; i < 36; i++){
-            for(int c = 0; c < 4; c++){
-                this.Q[i][c] = 0;
+        
+        try {
+            FileReader q1_tableQ = new FileReader(System.getProperty("user.dir") + "\\q1_tabelaQ.txt");
+            Scanner scan = new Scanner(q1_tableQ);
+            String linha = "";
+            while(scan.hasNextLine()){
+                for(int i = 0; i < Q.length; i++){
+                    linha = scan.nextLine();
+                    for(int c = 0; c < 4; c++){
+                        this.Q[i][c] = Double.parseDouble(linha.split(";")[c]);
+                    }
+                }
+            }
+            //quando existir o arquivo ele observa o peso das açaoes
+            //mas quando todos os pesos sao 0, ele continua aleatorio.
+            this.aleatorio = false;
+            scan.close();
+        } catch (FileNotFoundException e) {
+            //se o arquivo nao existir ele preenche a matriz com 0
+            for(int i = 0; i < Q.length; i++){
+                for(int c = 0; c < 4; c++){
+                    this.Q[i][c] = 0;
+                }
             }
         }
+        
         A[0] = 0; //subir
         A[1] = 1; //descer
         A[2] = 2; //ir pra esquerda
@@ -58,8 +90,8 @@ public class Q1_Learning {
         int movimentos = 0;
         int acao;
         int v_aux[] = new int[2];
-        while(movimentos < 10000){
-            if(movimentos < 5000)
+        while(movimentos < num_movimento){
+            if(aleatorio)
                 acao = random.nextInt(4);
             else
                 acao = move(estado_atual);
@@ -71,10 +103,10 @@ public class Q1_Learning {
                     //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " subindo");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
-                    for(int i = 0; i < 6; i++){
-                        for(int c = 0; c < 6 ; c++){
+                    for(int i = 0; i < campo.length; i++){
+                        for(int c = 0; c < campo.length ; c++){
                             if(c == v_aux[1] && i == v_aux[0]){
-                                i = 6;
+                                i = campo.length;
                                 break;
                             }
                             estado_atual++;
@@ -89,10 +121,10 @@ public class Q1_Learning {
                     //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " descendo");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
-                    for(int i = 0; i < 6; i++){
-                        for(int c = 0; c < 6 ; c++){
+                    for(int i = 0; i < campo.length; i++){
+                        for(int c = 0; c < campo.length ; c++){
                             if(c == v_aux[1] && i == v_aux[0]){
-                                i = 6;
+                                i = campo.length;
                                 break;
                             }
                             estado_atual++;
@@ -106,10 +138,10 @@ public class Q1_Learning {
                     //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela esquerda");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
-                    for(int i = 0; i < 6; i++){
-                        for(int c = 0; c < 6 ; c++){
+                    for(int i = 0; i < campo.length; i++){
+                        for(int c = 0; c < campo.length ; c++){
                             if(c == v_aux[1] && i == v_aux[0]){
-                                i = 6;
+                                i = campo.length;
                                 break;
                             }
                             estado_atual++;
@@ -123,10 +155,10 @@ public class Q1_Learning {
                     //System.out.println("Indo para " + v_aux[0] + ":" + v_aux[1] + " pela direita");
                     estado_anterior = estado_atual;
                     estado_atual = 0;
-                    for(int i = 0; i < 6; i++){
-                        for(int c = 0; c < 6 ; c++){
+                    for(int i = 0; i < campo.length; i++){
+                        for(int c = 0; c < campo.length ; c++){
                             if(c == v_aux[1] && i == v_aux[0]){
-                                i = 6;
+                                i = campo.length;
                                 break;
                             }
                             estado_atual++;
@@ -142,10 +174,10 @@ public class Q1_Learning {
         PrintWriter escritor = new PrintWriter(buffer);
         
         System.out.println("Matriz Q");
-        for(int i = 0; i < 36; i++){
+        for(int i = 0; i < Q.length; i++){
             for(int c = 0; c < 4; c++){
                 System.out.print(Q[i][c] + " ");
-                escritor.append(Q[i][c] + " ");
+                escritor.append(Q[i][c] + ";");
             }
             System.out.println();
             escritor.append("\n");
@@ -158,8 +190,8 @@ public class Q1_Learning {
     private int[] verificaMove(int move, int estado){
         int aux = 0;
         int v_aux[] = new int[2];
-        for(int i = 0; i < 6; i++){
-            for(int c = 0; c < 6; c++){
+        for(int i = 0; i < campo.length; i++){
+            for(int c = 0; c < campo.length; c++){
                 if(aux == estado){
                     //subida
                     if(move == 0){
@@ -171,7 +203,7 @@ public class Q1_Learning {
                     }
                     //descida
                     if(move == 1){
-                        if(i+1 != 6){
+                        if(i+1 != campo.length){
                             v_aux[0] = i;
                             v_aux[1] = c;
                             return v_aux;
@@ -187,7 +219,7 @@ public class Q1_Learning {
                     }
                     //para a direita
                     if(move == 3){
-                        if(c+1 != 6){
+                        if(c+1 != campo.length){
                             v_aux[0] = i;
                             v_aux[1] = c;
                             return v_aux;

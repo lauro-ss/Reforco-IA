@@ -8,7 +8,7 @@ public class App {
 
         if(i == 1){
             //comeca no estado 2 e o objetivo esta em um estado aleatorio
-            Q1_Learning Q1 = new Q1_Learning(2,random.nextInt(36));
+            Q1_Learning Q1 = new Q1_Learning(2,random.nextInt(36), 10000);
             Q1.start();
         }
         if(i == 2){
@@ -25,7 +25,7 @@ public class App {
             * no inicio da execucao ele abre o arquivo txt e prrenche a matriz com ele, mantendo o aprendizado.
             * caso queira zerar a matriz, basta excluir o arquivo q2_tabelaQ.
             */
-            Q2_Learning Q2 = new Q2_Learning(29);
+            Q2_Learning Q2 = new Q2_Learning(29, 1000000);
             Q2.start();
         }
     }

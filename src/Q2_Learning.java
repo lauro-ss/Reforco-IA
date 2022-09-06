@@ -85,15 +85,21 @@ public class Q2_Learning {
 
     private int goal;
     private int start;
+    private int num_movimento;
     private int estado_atual;
     private int estado_anterior;
     private boolean aleatorio = true;
     private Random random = new Random();
     private double fator_apd = 0.9;
-
-    public Q2_Learning(int goal){
+    /**
+     * 
+     * @param goal estado final
+     * @param num_movimento numero de movimentos
+     */
+    public Q2_Learning(int goal, int num_movimento){
         //gera um estado aleatorio valido
         this.start = atualizaStart(random.nextInt(3721));
+        this.num_movimento = num_movimento;
         this.estado_atual = this.start;
         this.goal = goal;
 
@@ -104,7 +110,6 @@ public class Q2_Learning {
                 this.S[i] = 0;
         }
 
-        //File q2_tableQ = new File(System.getProperty("user.dir") + "\\q2_tabelaQ.txt");
         try {
             FileReader q2_tableQ = new FileReader(System.getProperty("user.dir") + "\\q2_tabelaQ.txt");
             Scanner scan = new Scanner(q2_tableQ);
@@ -120,6 +125,7 @@ public class Q2_Learning {
             //quando existir o arquivo ele observa o peso das açaoes
             //mas quando todos os pesos sao 0, ele continua aleatorio.
             this.aleatorio = false;
+            scan.close();
         } catch (FileNotFoundException e) {
             //se o arquivo nao existir ele preenche a matriz com 0
             for(int i = 0; i < Q.length; i++){
@@ -139,7 +145,8 @@ public class Q2_Learning {
         int movimentos = 0;
         int acao;
         int v_aux[] = new int[2];
-        while(movimentos < 10000000){
+        System.out.println("Inicio dos movimentos ");
+        while(movimentos < num_movimento){
             if(aleatorio)
                 acao = random.nextInt(4);
             else
