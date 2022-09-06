@@ -12,7 +12,8 @@ public class App {
             Q1.start();
         }
         if(i == 2){
-            //comeca em um estado aleatorio e o objetivo esta no estado 22(saida)
+            //comeca em um estado aleatorio(logica dentro da classe Q2_larning) e 
+            //o objetivo esta no estado 29saida)
             /*
             * obs: pela quantidade de estados, a matriz Q ficou muito grande,
             * além disso, também é gerado um arquivo txt ao final, para melhor visualização.
@@ -20,8 +21,11 @@ public class App {
             *
             * obs: pode acontecer da tabela vir toda zerada. pois ele nao encontrou dentro
             * do numero de movimentos o estado de recompensa, entao recomendo rodar mais de uma vez
+            *
+            * no inicio da execucao ele abre o arquivo txt e prrenche a matriz com ele, mantendo o aprendizado.
+            * caso queira zerar a matriz, basta excluir o arquivo q2_tabelaQ.
             */
-            Q2_Learning Q2 = new Q2_Learning(random.nextInt(1739), 22);
+            Q2_Learning Q2 = new Q2_Learning(29);
             Q2.start();
         }
     }
